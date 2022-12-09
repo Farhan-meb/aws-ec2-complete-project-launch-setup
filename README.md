@@ -39,7 +39,7 @@
 - echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 - sudo apt update && sudo apt install --no-install-recommends yarn
 
-  <b>Setup project from git</b>
+<b>Setup project from git</b>
 - Commands might change depending on your project setup
 - cd ../../
 - sudo mkdir app, mkdir portal
