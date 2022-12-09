@@ -54,7 +54,7 @@
 - cd ../client
 - sudo npm i (or sudo yarn)
 
-  <b>NPM I takes too long (if)</b>
+<b>NPM I takes too long (if)</b>
 - https://github.com/microsoft/WSL/issues/7254
 
   <b>Build files location & copy build</b>
@@ -63,7 +63,7 @@
 - sudo mkdir portal
 - sudo cp -r app/portal/ironclad-investments/client/build/ home/app-deploy/portal/
 
-  <b>NGINX Setup</b>
+<b>NGINX Setup</b>
 - cd etc/nginx/sites-available/
 - sudo rm -r default ,  cd ../sites-enabled/ , rm -r default (remove default nginx conf)
 - cd ../sites-available/
@@ -112,10 +112,10 @@ server {
 - sudo systemctl restart nginx
 
 
-  <b>Add SSL Certification Video URL :</b>  
- https://www.youtube.com/watch?v=R5d-hN9UtpU
+<b>Add SSL Certification Video URL :</b>  
+https://www.youtube.com/watch?v=R5d-hN9UtpU
 
-Connect To VPS Database (MYSQL, TablePlus Setup) : Change ubuntu to root
-If you are using DigitalOcean
+<b>Connect To VPS Database (MYSQL, TablePlus Setup) :</b>
+Change ubuntu to root If you are using DigitalOcean
 ![alt text](https://github.com/Farhan-meb/aws-ec2-complete-project-launch-setup/blob/main/TablePlus%20Setup.png)
 
