@@ -2,18 +2,18 @@
 
 <b>EC2 Instance Setup Commands to launch a website in AWS</b>
 
-Connect to EC2
+<b>Connect to EC2</b>
 - chmod 400 ironclad-farhan.pem
 - ssh -i ironclad-farhan.pem ubuntu@ec2-35-88-144-6.us-west-2.compute.amazonaws.com
 Instance
 sudo apt update (Update Instance)
 
-Install NodeJS (v14)
+<b>Install NodeJS (v14)</b>
 - curl -sL https://deb.nodesource.com/setup_14.x | sudo bash -
 - cat /etc/apt/sources.list.d/nodesource.list
 - sudo apt -y install nodejs
 - node —version
-Install MySQL (Latest)
+<b>Install MySQL (Latest)</b>
 - sudo apt install mysql-server
 - sudo service mysql status
 - sudo mysql
@@ -23,22 +23,22 @@ Install MySQL (Latest)
 - sudo mysql -u root -p & put password admin_Ironclad_2022
 - create database ironclad_db_portal
 
-Install PM2
+<b>Install PM2</b>
 - sudo npm install -g pm2
 - sudo pm2 startup systemd
 
-Install Nginx
+<b>Install Nginx</b>
 - sudo apt-get install -y nginx
 - sudo ufw allow OpenSSH
 - sudo ufw allow 'Nginx Full'
 - sudo ufw --force enable
 
-Install Yarn
+<b>Install Yarn</b<
 - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 - echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 - sudo apt update && sudo apt install --no-install-recommends yarn
 
-Setup project from git
+  <b>Setup project from git</b>
 - Commands might change depending on your project setup
 - cd ../../
 - sudo mkdir app, mkdir portal
@@ -53,16 +53,16 @@ Setup project from git
 - cd ../client
 - sudo npm i (or sudo yarn)
 
-NPM I takes too long (if)
+  <b>NPM I takes too long (if)</b>
 - https://github.com/microsoft/WSL/issues/7254
 
-Build files location & copy build
+  <b>Build files location & copy build</b>
 - go to root folder & cd home/
 - sudo mkdir app-deploy
 - sudo mkdir portal
 - sudo cp -r app/portal/ironclad-investments/client/build/ home/app-deploy/portal/
 
-NGINX Setup
+  <b>NGINX Setup</b>
 - cd etc/nginx/sites-available/
 - sudo rm -r default ,  cd ../sites-enabled/ , rm -r default (remove default nginx conf)
 - cd ../sites-available/
@@ -111,8 +111,10 @@ server {
 - sudo systemctl restart nginx
 
 
-Add SSL Certification Video URL :  https://www.youtube.com/watch?v=R5d-hN9UtpU
+  <b>Add SSL Certification Video URL :</b>  
+ https://www.youtube.com/watch?v=R5d-hN9UtpU
 
 Connect To VPS Database (MYSQL, TablePlus Setup) : Change ubuntu to root
 If you are using DigitalOcean
+![alt text](https://github.com/Farhan-meb/aws-ec2-complete-project-launch-setup/blob/main/TablePlus%20Setup.png)
 
