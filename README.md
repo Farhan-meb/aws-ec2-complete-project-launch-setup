@@ -5,7 +5,8 @@
 <b>Connect to EC2</b>
 - chmod 400 ironclad-farhan.pem
 - ssh -i sampleKey.pem ubuntu@ec2-32-54-134-1.us-west-2.compute.amazonaws.com
-Instance
+
+<b>Instance</b>
 - sudo apt update (Update Instance)
 
 <b>Install NodeJS (v14)</b>
