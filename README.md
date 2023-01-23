@@ -114,7 +114,7 @@ server {
 
 <b>Add SSL Certification Video URL :</b>  
 - https://www.youtube.com/watch?v=R5d-hN9UtpU
-- Renew : all domains : sudo certbot renew | specific : sudo certbot --force-renewal -d ww.api.ironcladinvestments.co.uk
+- Renew : (all domains) sudo certbot renew | (specific) sudo certbot --force-renewal -d ww.api.ironcladinvestments.co.uk
 
 <b>Connect To VPS Database (MYSQL, TablePlus Setup) :</b>
 Change ubuntu to root If you are using DigitalOcean
