@@ -170,5 +170,6 @@ For added security, you can integrate SSL certification into your setup. Here's 
 If you are utilizing DigitalOcean, you might need to change the user from "ubuntu" to "root" to connect to your VPS database.
 
 Launching a complete website on AWS EC2 involves several steps, from initial connection to instance setup, project deployment, Nginx configuration, and even SSL integration. By following this guide, you've embarked on a journey to successfully launch your website and make the most of the powerful capabilities offered by AWS.
+
 ![alt text](https://github.com/Farhan-meb/aws-ec2-complete-project-launch-setup/blob/main/TablePlus%20Setup.png)
 
