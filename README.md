@@ -1,122 +1,174 @@
-# aws-ec2-complete-project-launch-setup
+**Step-by-Step Guide: Launching a Complete Website on AWS EC2**
 
-<b>EC2 Instance Setup Commands to launch a website in AWS</b>
+In the digital era, a strong online presence is paramount for success. AWS EC2 provides an exceptional platform for hosting websites, offering the scalability and flexibility required to meet diverse demands. In this guide, we'll take you through the comprehensive process of setting up an entire project on AWS EC2, from connecting to the instance to configuring the web server and more.
 
-<b>Connect to EC2</b>
-- chmod 400 ironclad-farhan.pem
-- ssh -i sampleKey.pem ubuntu@ec2-32-54-134-1.us-west-2.compute.amazonaws.com
+**Connecting to Your EC2 Instance**
 
-<b>Instance</b>
-- sudo apt update (Update Instance)
+To begin your journey towards launching a website on AWS EC2, follow these steps:
 
-<b>Install NodeJS (v14)</b>
-- curl -sL https://deb.nodesource.com/setup_14.x | sudo bash -
-- cat /etc/apt/sources.list.d/nodesource.list
-- sudo apt -y install nodejs
-- node —version
-<b>Install MySQL (Latest)</b>
-- sudo apt install mysql-server
-- sudo service mysql status
-- sudo mysql
-- ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password by 'admin_Ironclad_2022'; (If doesn’t work, type it instead copying and pasting)
-- exit;
-- sudo mysql_secure_installation
-- sudo mysql -u root -p & put password admin_Ironclad_2022
-- create database ironclad_db_portal
+1. Open your terminal and navigate to the directory containing your private key (PEM file).
+2. Use the following command to adjust the permissions of your private key:
+   ```
+   chmod 400 ironclad-farhan.pem
+   ```
+3. Initiate an SSH connection to your EC2 instance using your private key:
+   ```
+   ssh -i ironclad-farhan.pem ubuntu@ec2-32-54-134-1.us-west-2.compute.amazonaws.com
+   ```
 
-<b>Install PM2</b>
-- sudo npm install -g pm2
-- sudo pm2 startup systemd
+**Setting Up Your EC2 Instance**
 
-<b>Install Nginx</b>
-- sudo apt-get install -y nginx
-- sudo ufw allow OpenSSH
-- sudo ufw allow 'Nginx Full'
-- sudo ufw --force enable
+After connecting to your EC2 instance, proceed with the setup:
 
-<b>Install Yarn</b>
-- curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-- echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-- sudo apt update && sudo apt install --no-install-recommends yarn
+1. Update the instance for the latest packages:
+   ```
+   sudo apt update
+   ```
 
-<b>Setup project from git</b>
-- Commands might change depending on your project setup
-- cd ../../
-- sudo mkdir app, mkdir portal
-- sudo git clone https://gitlab.com/ironclad-investments/ironclad-investments.git
-- git config --global --add safe.directory /app/ironclad-investments
-- cd ironclad-investments
-- sudo git checkout prod-portal
-- cd server, sudo npm i (or sudo yarn)
-- sudo npm run prisma-wohoo
-- sudo npm start, Control-C
-- sudo pm2 start dist/index.js
-- cd ../client
-- sudo npm i (or sudo yarn)
+2. Install Node.js version 14:
+   ```
+   curl -sL https://deb.nodesource.com/setup_14.x | sudo bash -
+   cat /etc/apt/sources.list.d/nodesource.list
+   sudo apt -y install nodejs
+   ```
 
-<b>NPM I takes too long (if)</b>
-- https://github.com/microsoft/WSL/issues/7254
+3. Install the latest MySQL:
+   ```
+   sudo apt install mysql-server
+   sudo service mysql status
+   sudo mysql
+   ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password by 'admin_Ironclad_2022';
+   exit;
+   sudo mysql_secure_installation
+   sudo mysql -u root -p
+   create database ironclad_db_portal;
+   ```
 
-  <b>Build files location & copy build</b>
-- go to root folder & cd home/
-- sudo mkdir app-deploy
-- sudo mkdir portal
-- sudo cp -r app/portal/ironclad-investments/client/build/ home/app-deploy/portal/
+4. Set up PM2 (Process Manager for Node.js):
+   ```
+   sudo npm install -g pm2
+   sudo pm2 startup systemd
+   ```
 
-<b>NGINX Setup</b>
-- cd etc/nginx/sites-available/
-- sudo rm -r default ,  cd ../sites-enabled/ , rm -r default (remove default nginx conf)
-- cd ../sites-available/
-- sudo nano portal & put config :
+5. Install Nginx (Web Server):
+   ```
+   sudo apt-get install -y nginx
+   sudo ufw allow OpenSSH
+   sudo ufw allow 'Nginx Full'
+   sudo ufw --force enable
+   ```
 
-server {
-  listen 80 default_server;
-  server_name ip portal.ironcladinvestments.co.uk ww.portal.ironcladinvestments.co.uk;
+6. Install Yarn (Dependency Manager for Node.js):
+   ```
+   curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+   echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+   sudo apt update && sudo apt install --no-install-recommends yarn
+   ```
 
-  root /home/app-deploy/portal/build;
-  index index.html indexmhtm;
+**Setting Up Your Project**
 
- location / {
-  try_files $uri /index.html;
-  }
-  location /api {
-        proxy_pass https://api.ironcladinvestments.co.uk; (Or http://localhost:4000)
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
-  }
-}
+Next, set up your project on the EC2 instance:
 
-- save it (ctl x, y, enter)
-- sudo nano api-portal & put config :
+1. Navigate to your desired directory and create subdirectories for your project:
+   ```
+   cd ../../
+   sudo mkdir app portal
+   ```
 
-server {
-    server_name ip api.ironcladinvestments.co.uk ww.api.ironcladinvestments.co.uk;
-    location / {
-        proxy_pass http://localhost:4000;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
-    }
-}
+2. Clone your project from GitLab:
+   ```
+   sudo git clone https://gitlab.com/ironclad-investments/ironclad-investments.git
+   git config --global --add safe.directory /app/ironclad-investments
+   cd ironclad-investments
+   sudo git checkout prod-portal
+   ```
 
-- save it (ctl x, y, enter)
-- cd ../sites-enabled/
-- sudo ln -fs ../sites-available/portal
-- sudo ln -fs ../sites-available/api-portal
-- sudo nginx -t
-- sudo systemctl restart nginx
+3. Install dependencies and run your server and client applications:
+   ```
+   cd server
+   sudo npm install
+   sudo npm run prisma-wohoo
+   sudo npm start
+   sudo pm2 start dist/index.js
+   cd ../client
+   sudo npm install
+   ```
 
+**Deploying and Configuring Nginx**
 
-<b>Add SSL Certification Video URL :</b>  
-- https://www.youtube.com/watch?v=R5d-hN9UtpU
-- Renew : (all domains) sudo certbot renew | (specific) sudo certbot --force-renewal -d ww.api.ironcladinvestments.co.uk
+Now, let's deploy your app and configure Nginx:
 
-<b>Connect To VPS Database (MYSQL, TablePlus Setup) :</b>
-Change ubuntu to root If you are using DigitalOcean
+1. Create deployment directories and copy build files:
+   ```
+   cd ~
+   sudo mkdir app-deploy
+   sudo mkdir portal
+   sudo cp -r app/portal/ironclad-investments/client/build/ ~/app-deploy/portal/
+   ```
+
+2. Configure Nginx for your project:
+
+   - Navigate to Nginx's sites configuration directory:
+     ```
+     cd /etc/nginx/sites-available/
+     ```
+
+   - Remove the default configuration files:
+     ```
+     sudo rm -r default
+     ```
+
+   - Navigate to the `sites-enabled` directory and remove the default configuration symlink:
+     ```
+     cd ../sites-enabled/
+     sudo rm -r default
+     ```
+
+   - Create and configure the Nginx server block for your portal:
+     ```
+     cd ../sites-available/
+     sudo nano portal
+     ```
+     Add your configuration, save, and exit.
+
+   - Create and configure the Nginx server block for your API:
+     ```
+     sudo nano api-portal
+     ```
+     Add your configuration, save, and exit.
+
+3. Create symbolic links to enable the configurations:
+   ```
+   sudo ln -fs ../sites-available/portal
+   sudo ln -fs ../sites-available/api-portal
+   ```
+
+4. Test the Nginx configurations:
+   ```
+   sudo nginx -t
+   ```
+
+5. Restart Nginx to apply the changes:
+   ```
+   sudo systemctl restart nginx
+   ```
+
+**Adding SSL Certification**
+
+For added security, you can integrate SSL certification into your setup. Here's a video tutorial for the process: [SSL Certification Video Tutorial](https://www.youtube.com/watch?v=R5d-hN9UtpU). Additionally, you can renew certificates with the following commands:
+   - For all domains:
+     ```
+     sudo certbot renew
+     ```
+   - For specific domains:
+     ```
+     sudo certbot --force-renewal -d ww.api.ironcladinvestments.co.uk
+     ```
+
+**Connecting to VPS Database (MYSQL, TablePlus Setup)**
+
+If you are utilizing DigitalOcean, you might need to change the user from "ubuntu" to "root" to connect to your VPS database.
+
+Launching a complete website on AWS EC2 involves several steps, from initial connection to instance setup, project deployment, Nginx configuration, and even SSL integration. By following this guide, you've embarked on a journey to successfully launch your website and make the most of the powerful capabilities offered by AWS.
 ![alt text](https://github.com/Farhan-meb/aws-ec2-complete-project-launch-setup/blob/main/TablePlus%20Setup.png)
 
