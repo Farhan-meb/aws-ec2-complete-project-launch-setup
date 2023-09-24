@@ -156,11 +156,21 @@ Now, let's deploy your app and configure Nginx:
 **Adding SSL Certification**
 
 For added security, you can integrate SSL certification into your setup. Here's a video tutorial for the process: [SSL Certification Video Tutorial](https://www.youtube.com/watch?v=R5d-hN9UtpU). Additionally, you can renew certificates with the following commands:
-   - For all domains:
+- Add SSL for all domains:
+ ```
+sudo snap --version
+apt policy snapd
+sudo snap install core; sudo snap refresh core
+sudo snap install --classic certbot
+sudo ln -s /snap/bin/certbot /usr/bin/certbot
+sudo certbot --version
+sudo certbot --nginx
+```
+   - Renew all domains:
      ```
      sudo certbot renew
      ```
-   - For specific domains:
+   - Renew specific domains:
      ```
      sudo certbot --force-renewal -d ww.api.ironcladinvestments.co.uk
      ```
